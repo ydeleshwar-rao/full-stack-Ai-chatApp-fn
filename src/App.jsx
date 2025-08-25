@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
@@ -30,6 +30,7 @@ const App = () => {
     );
 
   return (
+   
     <div data-theme={theme}>
       <Navbar />
 
@@ -43,6 +44,7 @@ const App = () => {
 
       <Toaster />
     </div>
+
   );
 };
 
