@@ -15,6 +15,12 @@ export const useAuthStore = create((set, get) => ({
 
   isCheckingAuth: true,
 
+    // ✅ Bypass ke liye manual setter
+  setAuthUser: (user) => {
+    set({ authUser: user });
+    get().connectSocket();
+  },
+
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("/auth/check");
@@ -50,6 +56,13 @@ export const useAuthStore = create((set, get) => ({
   },
 
   login: async (data) => {
+      // ✅ bypass check
+      if (data.email === "root@gmail.com" && data.password === "root") {
+        set({ authUser: { id: "bypass-123", email: data.email, name: "Bypass User" } });
+        toast.success("Bypass login successful ✅");
+        get().connectSocket();
+        return;
+      }
     set({ isLoggingIn: true });
     try {
       const res = await axiosInstance.post("/auth/login", data);

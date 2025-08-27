@@ -13,10 +13,32 @@ const LoginPage = () => {
   });
   const {login, isLoggingIn} = useAuthStore();
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   login(formData);
+  // };
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    login(formData);
-  };
+  e.preventDefault();
+
+  // Bypass login check
+  if (
+    formData.email === "root@gmail.com" &&
+    formData.password === "root"
+  ) {
+    // auth store update karo
+    useAuthStore.getState().setAuthUser({
+      email: "root@gmail.com",
+      name: "Bypass User",
+      id: "bypass-123"
+    });
+    return;
+  }
+
+  // Normal backend login
+  login(formData);
+};
+
 
   return (
     <div className="h-screen grid lg:grid-cols-2 mt-5">
